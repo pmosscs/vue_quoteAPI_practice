@@ -1,26 +1,35 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <section>
+    <h1>Kanye Quotes</h1>
+    <p>"{{ info }}"</p>
+    <p>-kanye west</p>
+    <button @click="getQuote">Another One</button>
+  </section>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import axios from "axios"
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
+  data() {
+    return {
+      info: null
+    }
+  },
+  methods: {
+    getQuote() {
+      axios.get('https://api.kanye.rest').then((res) => {
+        console.log(res.data)
+        this.info = res.data.quote
+      })
+    }
+  },
+  mounted() {
+    this.getQuote()
   }
 }
+
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
